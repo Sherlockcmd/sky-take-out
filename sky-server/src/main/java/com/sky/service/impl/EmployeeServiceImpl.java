@@ -1,17 +1,29 @@
 package com.sky.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.sky.constant.MessageConstant;
+import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
+import com.sky.context.BaseContext;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
+import com.sky.result.PageResult;
 import com.sky.service.EmployeeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -54,5 +66,56 @@ public class EmployeeServiceImpl implements EmployeeService {
         //3、返回实体对象
         return employee;
     }
+
+    @Override
+    public void save(EmployeeDTO employeeDTO) {
+        Employee emp = new Employee();
+        //把employeeDTO里的对象值赋给新建的对象emp
+        //注：DTO只是有少部分的员工信息，所以下面要补全员工信息
+        BeanUtils.copyProperties(employeeDTO,emp);
+        //补全员工状态
+        emp.setStatus(StatusConstant.ENABLE);
+        //补全密码(md5加密过后)
+        emp.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
+        //新增用户的创建时间和更新时间是一样的，都是当前时间
+        emp.setCreateTime(LocalDateTime.now());
+        emp.setUpdateTime(LocalDateTime.now());
+        //新增用户的创建id和更新id是一样的，都是当前id
+        emp.setUpdateUser(BaseContext.getCurrentId());
+        emp.setCreateUser(BaseContext.getCurrentId());
+
+        employeeMapper.insert(emp);
+    }
+
+    @Override
+    public void startOrstop(Integer status, Long id) {
+        Employee emp = Employee.builder().id(id).status(status).build();
+        employeeMapper.update(emp);
+    }
+
+    @Override
+    public Employee selectById(Long id) {
+        return employeeMapper.selectById(id);
+    }
+
+    @Override
+    public void updateEmployee(EmployeeDTO employeeDTO) {
+        Employee emp = new Employee();
+        //把employeeDTO里的对象值赋给新建的对象emp
+        BeanUtils.copyProperties(employeeDTO,emp);
+        //获取当前时间作为更新时间
+        emp.setUpdateTime(LocalDateTime.now());
+        //获取当前id为emp中的updateuser赋值
+        emp.setUpdateUser(BaseContext.getCurrentId());
+        employeeMapper.update(emp);
+    }
+
+    @Override
+    public PageResult list(EmployeePageQueryDTO employeePageQueryDTO) {
+        PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());
+        Page<Employee> list = employeeMapper.list(employeePageQueryDTO);
+        return new PageResult<Employee>(list.getTotal(),list.getResult());
+    }
+
 
 }
