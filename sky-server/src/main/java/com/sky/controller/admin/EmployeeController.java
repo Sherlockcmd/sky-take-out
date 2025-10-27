@@ -119,7 +119,7 @@ public class EmployeeController {
     }
 
     /**
-     * 更新员工的状态(status)
+     * 查询员工信息
      *
      * @param id
      * @return
@@ -133,7 +133,7 @@ public class EmployeeController {
     }
 
     /**
-     * 更新员工的状态(status)
+     * 更新员工信息
      *
      * @param employeeDTO
      * @return
