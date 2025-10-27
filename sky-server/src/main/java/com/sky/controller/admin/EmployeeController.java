@@ -78,7 +78,12 @@ public class EmployeeController {
         return Result.success();
     }
 
-
+    /**
+     * 员工分页
+     *
+     * @param employeePageQueryDTO
+     * @return
+     */
     @GetMapping("/page")
     @ApiOperation("员工分页查询")
     public Result page(EmployeePageQueryDTO employeePageQueryDTO){
