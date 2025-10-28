@@ -15,14 +15,44 @@ public interface EmployeeService {
      */
     Employee login(EmployeeLoginDTO employeeLoginDTO);
 
+    /**
+     * 添加员工
+     *
+     * @param employeeDTO
+     * @return
+     */
     void save(EmployeeDTO employeeDTO);
 
-
+    /**
+     * 更新员工状态
+     *
+     * @param status
+     * @param id
+     * @return
+     */
     void startOrstop(Integer status, Long id);
 
+    /**
+     * 查询员工
+     *
+     * @param id
+     * @return
+     */
     Employee selectById(Long id);
 
+    /**
+     * 修改员工信息
+     *
+     * @param employeeDTO
+     * @return
+     */
     void updateEmployee(EmployeeDTO employeeDTO);
 
-    PageResult list(EmployeePageQueryDTO employeePageQueryDTO);
+    /**
+     * 员工分页
+     *
+     * @param employeePageQueryDTO
+     * @return
+     */
+    PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
 }

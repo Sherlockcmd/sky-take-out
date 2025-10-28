@@ -88,7 +88,7 @@ public class EmployeeController {
     @ApiOperation("员工分页查询")
     public Result page(EmployeePageQueryDTO employeePageQueryDTO){
         log.info("分页查询，{}",employeePageQueryDTO);
-        PageResult pageresult = employeeService.list(employeePageQueryDTO);
+        PageResult pageresult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageresult);
     }
 
@@ -111,7 +111,8 @@ public class EmployeeController {
     /**
      * 更新员工的状态(status)
      *
-     * @param status,id
+     * @param status
+     * @param id
      * @return
      */
     @PostMapping("/status/{status}")

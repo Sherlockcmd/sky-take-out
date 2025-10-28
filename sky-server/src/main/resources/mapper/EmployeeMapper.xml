@@ -45,7 +45,7 @@
     </update>
 
 
-    <select id="list" resultType="Employee">
+    <select id="pageQuery" resultType="Employee">
         select * from employee
         <where>
             <if test="name!=null and name!=''">

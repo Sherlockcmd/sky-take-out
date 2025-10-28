@@ -67,6 +67,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
+    /**
+     * 添加员工
+     *
+     * @param employeeDTO
+     * @return
+     */
     @Override
     public void save(EmployeeDTO employeeDTO) {
         Employee emp = new Employee();
@@ -87,17 +93,36 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.insert(emp);
     }
 
+    /**
+     * 更新员工状态
+     *
+     * @param status
+     * @param id
+     * @return
+     */
     @Override
     public void startOrstop(Integer status, Long id) {
         Employee emp = Employee.builder().id(id).status(status).build();
         employeeMapper.update(emp);
     }
 
+    /**
+     * 查询员工
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Employee selectById(Long id) {
         return employeeMapper.selectById(id);
     }
 
+    /**
+     * 修改员工信息
+     *
+     * @param employeeDTO
+     * @return
+     */
     @Override
     public void updateEmployee(EmployeeDTO employeeDTO) {
         Employee emp = new Employee();
@@ -110,10 +135,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.update(emp);
     }
 
+    /**
+     * 员工分页
+     *
+     * @param employeePageQueryDTO
+     * @return
+     */
     @Override
-    public PageResult list(EmployeePageQueryDTO employeePageQueryDTO) {
+    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
         PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());
-        Page<Employee> list = employeeMapper.list(employeePageQueryDTO);
+        Page<Employee> list = employeeMapper.pageQuery(employeePageQueryDTO);
         return new PageResult<Employee>(list.getTotal(),list.getResult());
     }
 
