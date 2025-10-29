@@ -83,12 +83,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         emp.setStatus(StatusConstant.ENABLE);
         //补全密码(md5加密过后)
         emp.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        //新增用户的创建时间和更新时间是一样的，都是当前时间
-        emp.setCreateTime(LocalDateTime.now());
-        emp.setUpdateTime(LocalDateTime.now());
-        //新增用户的创建id和更新id是一样的，都是当前id
-        emp.setUpdateUser(BaseContext.getCurrentId());
-        emp.setCreateUser(BaseContext.getCurrentId());
+
+        //用SpringAOP完善之后，就不用在service里手动加了
+//        //新增用户的创建时间和更新时间是一样的，都是当前时间
+//        emp.setCreateTime(LocalDateTime.now());
+//        emp.setUpdateTime(LocalDateTime.now());
+//        //新增用户的创建id和更新id是一样的，都是当前id
+//        emp.setUpdateUser(BaseContext.getCurrentId());
+//        emp.setCreateUser(BaseContext.getCurrentId());
 
         employeeMapper.insert(emp);
     }
@@ -128,10 +130,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee emp = new Employee();
         //把employeeDTO里的对象值赋给新建的对象emp
         BeanUtils.copyProperties(employeeDTO,emp);
-        //获取当前时间作为更新时间
-        emp.setUpdateTime(LocalDateTime.now());
-        //获取当前id为emp中的updateuser赋值
-        emp.setUpdateUser(BaseContext.getCurrentId());
+        //用SpringAOP完善之后，就不用在service里手动加了
+//        //获取当前时间作为更新时间
+//        emp.setUpdateTime(LocalDateTime.now());
+//        //获取当前id为emp中的updateuser赋值
+//        emp.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.update(emp);
     }
 

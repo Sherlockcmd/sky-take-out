@@ -56,15 +56,18 @@ public class CategoryServiceImpl implements CategoryService {
         //补全状态
         category.setStatus(StatusConstant.DISABLE);
 
-        //新增用户的创建时间和更新时间是一样的，都是当前时间
-        category.setCreateTime(LocalDateTime.now());
-        category.setUpdateTime(LocalDateTime.now());
-        //新增用户的创建id和更新id是一样的，都是当前id
-        category.setUpdateUser(BaseContext.getCurrentId());
-        category.setCreateUser(BaseContext.getCurrentId());
+        //用SpringAOP完善之后，就不用在service里手动加了
+//        //新增用户的创建时间和更新时间是一样的，都是当前时间
+//        category.setCreateTime(LocalDateTime.now());
+//        category.setUpdateTime(LocalDateTime.now());
+//        //新增用户的创建id和更新id是一样的，都是当前id
+//        category.setUpdateUser(BaseContext.getCurrentId());
+//        category.setCreateUser(BaseContext.getCurrentId());
 
         categoryMapper.insert(category);
     }
+
+
     /**
      * 根据类型查询分类
      * @param type
@@ -111,9 +114,11 @@ public class CategoryServiceImpl implements CategoryService {
         //注：DTO只是有少部分的信息，所以下面要补全信息
         BeanUtils.copyProperties(categoryDTO,category);
 
-        //只用把更新时间和修改人添加上就行
-        category.setUpdateTime(LocalDateTime.now());
-        category.setUpdateUser(BaseContext.getCurrentId());
+
+//用SpringAOP完善之后，就不用在service里手动加了
+//        //只用把更新时间和修改人添加上就行
+//        category.setUpdateTime(LocalDateTime.now());
+//        category.setUpdateUser(BaseContext.getCurrentId());
 
         categoryMapper.update(category);
     }
