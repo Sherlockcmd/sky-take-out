@@ -11,6 +11,7 @@
               (#{df.dishId},#{df.name},#{df.value})
           </foreach>
     </insert>
+
     <delete id="deleteflavor">
         delete from dish_flavor
         where dish_id in 
@@ -18,4 +19,11 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectByDishId" resultType="com.sky.entity.DishFlavor">
+        select *
+        from dish_flavor
+        where dish_id=#{id}
+    </select>
+
 </mapper>

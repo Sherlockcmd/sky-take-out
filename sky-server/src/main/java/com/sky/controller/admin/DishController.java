@@ -7,6 +7,7 @@ import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
+import com.sky.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -54,15 +55,59 @@ public class DishController {
               return Result.success(pageresult);
        }
 
-
+       /**
+        * 批量删除菜品
+        * @param ids
+        * @return
+        */
        @DeleteMapping
        @ApiOperation("批量删除菜品")
        public Result delete(@RequestParam List<Long> ids){
-
               log.info("批量删除菜品：{}", ids);
-            dishService.deletedish(ids);
+              dishService.deletedish(ids);
 
             return Result.success("成功删除");
+       }
+
+
+       /**
+        *根据id查询菜品
+        * @param id
+        * @return
+        */
+       @GetMapping("/{id}")
+       @ApiOperation("根据id查询菜品")
+       public Result selectById(@PathVariable Long id){
+              log.info("根据id查询菜品：{}",id );
+             DishVO dishVO = dishService.selectById(id);
+              return Result.success(dishVO);
+       }
+
+       /**
+        * 启售或停售
+        * @param status
+        * @param id
+        * @return
+        */
+       @PostMapping("status/{status}")
+       @ApiOperation("启售或停售")
+       public Result updatestatus(@PathVariable Integer status,Long id){
+              log.info("启售或停售：{}{}",status,id);
+              dishService.startOrstop(status,id);
+              return Result.success("修改成功");
+       }
+
+       /**
+        * 修改菜品信息
+        * @param dishDTO
+        * @return
+        */
+       @PutMapping
+       @ApiOperation("修改菜品信息")
+       public Result updatedish(@RequestBody DishDTO dishDTO){
+              log.info("修改菜品信息：{}",dishDTO);
+              dishService.updatedish(dishDTO);
+              return Result.success("修改成功");
        }
 
 
