@@ -47,4 +47,6 @@ public interface DishService {
      * @param dishDTO
      */
     void updatedish(DishDTO dishDTO);
+
+    List<DishVO> selectBycategoryId(Long categoryId);
 }

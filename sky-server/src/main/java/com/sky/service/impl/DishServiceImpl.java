@@ -6,10 +6,8 @@ import com.sky.constant.MessageConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
-import com.sky.entity.Category;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
-import com.sky.enumeration.OperationType;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorsMapper;
 import com.sky.mapper.DishMapper;
@@ -119,6 +117,11 @@ public class DishServiceImpl implements DishService {
            dishFlavorsMapper.disnflavorsadd(dishDTO.getFlavors());
         }
 
+    }
+
+    @Override
+    public List<DishVO> selectBycategoryId(Long categoryId) {
+       return dishMapper.selectBycategoryId(categoryId);
     }
 
 }

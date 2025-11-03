@@ -110,6 +110,19 @@ public class DishController {
               return Result.success("修改成功");
        }
 
+       /**
+        *根据分类id查询菜品
+        * @param categoryId
+        * @return
+        */
+       @GetMapping("/list")
+       @ApiOperation("根据分类id查询菜品")
+       public Result selectBycategoryId(Long categoryId){
+              log.info("根据分类id查询菜品：{}",categoryId );
+             List<DishVO> dishVO = dishService.selectBycategoryId(categoryId);
+              return Result.success(dishVO);
+       }
+
 
 
 
