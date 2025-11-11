@@ -9,12 +9,29 @@ import java.util.List;
 @Mapper
 public interface SetmealDishMapper {
 
-
+    /**
+     * 根据菜品id查询套餐id
+     * @param ids
+     * @return
+     */
     List<Long> getSetmealIdsByDishIds(List<Long> ids);
 
+    /**
+     *增加套餐里的菜品
+     * @param setmealDishes
+     */
     void setmealdishadd(List<SetmealDish> setmealDishes);
 
+    /**
+     * 删除套餐里的菜品
+     * @param ids
+     */
     void deletesetmealdish(List<Long> ids);
 
+    /**
+     * 根据套餐id查询菜品
+     * @param id
+     * @return
+     */
     List<SetmealDish> selectBySetmealId(Long id);
 }
